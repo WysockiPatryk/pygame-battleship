@@ -1,15 +1,32 @@
-from pygame import Surface
+import pygame
 
 from code.Scenes.Scene import Scene
 
 
 class EndgameScreen(Scene):
-    def __init__(self):
+    name = "Endgame Screen"
+
+    def __init__(self, screen: pygame.Surface):
+        self._screen = screen
         self.objects = []
 
-    def render(self, screen: Surface):
-        print("Endgame Screen")
-        screen.fill(color='crimson')
+    @property
+    def shortcuts(self):
+        return {}
 
-    def recalculate_objects_position(self):
+    @property
+    def screen(self):
+        return self._screen
+
+    @screen.setter
+    def screen(self, value):
+        self._screen = value
+
+    def render(self):
+        self.screen.fill(color="crimson")
+
+    def update(self):
+        print("Endgame Screen - update()")
+
+    def recalculate_objects(self):
         pass

@@ -1,5 +1,3 @@
-import sys
-
 import pygame
 
 import code.constants as constants
@@ -9,7 +7,6 @@ from code.SceneManager import SceneManager
 from code.Scenes.BattleStage import BattleStage
 from code.Scenes.EndgameScreen import EndgameScreen
 from code.Scenes.PreparationStage import PreparationStage
-from code.Scenes.Scene import Scene
 from code.Scenes.WelcomeScreen import WelcomeScreen
 
 
@@ -28,30 +25,33 @@ class Game:
         self.players.append(self.player1)
         # y1 = Yacht(self.images['yacht'], (100, 100))
         # self.player1.ships.append(y1)
-        self.scene_manager = SceneManager(self.screen)
-        self.active_scene = self.scene_manager.switch_scene_to(WelcomeScreen())
+        self.scene_manager = SceneManager()
+        self.scene_manager.set_scene(WelcomeScreen(self.screen))
 
-    def update_objects(self, active_scene: Scene):
-        active_scene.render(self.screen)
+    def update_objects(self):
+        self.scene_manager.active_scene.update()
         for player in self.players:
             for ship in player.ships:
                 self.screen.blit(ship.image, ship.position)
 
+    def render(self):
+        self.scene_manager.active_scene.render()
+        # Other things to render (?)
+
     def run(self):
         while True:
-            for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                    pygame.quit()
-                    sys.exit()
-                elif event.type == pygame.VIDEORESIZE:
-                    self.screen = utilities.limit_window_size(event)
-                elif event.type == pygame.KEYDOWN:
+            events = pygame.event.get()
+            for event in events:
+                if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_1:
-                        self.active_scene = self.scene_manager.switch_scene_to(PreparationStage())
+                        self.scene_manager.set_scene(PreparationStage(self.screen))
                     elif event.key == pygame.K_2:
-                        self.active_scene = self.scene_manager.switch_scene_to(BattleStage())
+                        self.scene_manager.set_scene(BattleStage(self.screen))
                     elif event.key == pygame.K_3:
-                        self.active_scene = self.scene_manager.switch_scene_to(EndgameScreen())
-            self.update_objects(self.active_scene)
+                        self.scene_manager.set_scene(EndgameScreen(self.screen))
+                    elif event.key == pygame.K_4:
+                        self.update_objects()
+            self.scene_manager.active_scene.handle_inputs(events)
+            self.render()
             pygame.display.update()
             self.clock.tick(60)

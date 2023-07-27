@@ -1,15 +1,32 @@
-from pygame import Surface
+import pygame
 
 from code.Scenes.Scene import Scene
 
 
 class BattleStage(Scene):
-    def __init__(self):
+    name = "Battle Stage"
+
+    def __init__(self, screen: pygame.Surface):
+        self._screen = screen
         self.objects = []
 
-    def render(self, screen: Surface):
-        print("Battle Stage")
-        screen.fill(color='aqua')
+    @property
+    def shortcuts(self):
+        return {}
 
-    def recalculate_objects_position(self):
+    @property
+    def screen(self):
+        return self._screen
+
+    @screen.setter
+    def screen(self, value):
+        self._screen = value
+
+    def render(self):
+        self.screen.fill(color="aqua")
+
+    def update(self):
+        print("Battle Stage - update()")
+
+    def recalculate_objects(self):
         pass
