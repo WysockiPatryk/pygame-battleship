@@ -25,8 +25,8 @@ class EndgameScreen(Scene):
     def render(self):
         self.screen.fill(color="crimson")
 
-    def update(self):
-        print("Endgame Screen - update()")
+    def update(self, events: list[pygame.event]):
+        pass
 
     def recalculate_objects(self):
         pass

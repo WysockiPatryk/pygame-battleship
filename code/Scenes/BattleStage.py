@@ -25,8 +25,8 @@ class BattleStage(Scene):
     def render(self):
         self.screen.fill(color="aqua")
 
-    def update(self):
-        print("Battle Stage - update()")
+    def update(self, events: list[pygame.event]):
+        pass
 
     def recalculate_objects(self):
         pass

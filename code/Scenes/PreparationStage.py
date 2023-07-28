@@ -26,11 +26,11 @@ class PreparationStage(Scene):
     def render(self):
         self.screen.fill(color=self.background_color)
 
-    def update(self):
-        print("Preparation Stage - update()")
+    def update(self, events: list[pygame.event]):
+        pass
 
     def recalculate_objects(self):
-        print("PreparationStage - recalculate_objects()")
+        pass
 
     def change_color_to_black(self):
         self.background_color = "black"

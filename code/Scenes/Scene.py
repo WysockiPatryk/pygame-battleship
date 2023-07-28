@@ -31,7 +31,7 @@ class Scene(ABC):
         raise NotImplementedError
 
     @abstractmethod
-    def update(self):
+    def update(self, events: list[pygame.event]):
         raise NotImplementedError
 
     @abstractmethod
